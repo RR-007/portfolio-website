@@ -19,6 +19,14 @@ const PROJECTS = [
     tags: ["React Native", "Expo", "Firebase", "Node.js", "GitHub Actions", "EAS"],
   },
   {
+    name: "Widget Framework",
+    badge: "Ongoing",
+    badgeStyle: "text-amber-400 border-amber-500",
+    description:
+      "A low-code framework that lets non-developers build full web pages from simple JSON configs — each 'widget' maps to a component, handling layouts, dynamic actions, and complex calculations. Currently leading a full rebuild in React, expanding support to developers for standardized, department-wide page experiences with drastically reduced dev time.",
+    tags: ["Angular", "React", "JSON", "Low-Code", "Framework Design"],
+  },
+  {
     name: "College Fest Platform",
     badge: "Shipped",
     badgeStyle: "text-gray-500 border-gray-600",
@@ -32,11 +40,12 @@ const SKILLS = [
   { category: "Frontend", items: ["React", "React Native", "Next.js", "Tailwind CSS"] },
   { category: "Backend", items: ["Node.js", "Express", "FastAPI", "Firebase"] },
   { category: "Tooling", items: ["GitHub Actions", "EAS", "Expo", "CI/CD"] },
-  { category: "Language", items: ["C++/C", "JS", "TS", "Python(Average)", "Java(Average)"] },
+  { category: "Language", items: ["C++/C", "JS", "TS", "Python (avg)", "Java (avg)"] },
 ];
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -66,9 +75,9 @@ export default function Home() {
       <nav
         className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
         style={{
-          background: scrolled ? "rgba(3,7,18,0.85)" : "transparent",
-          backdropFilter: scrolled ? "blur(12px)" : "none",
-          borderBottom: scrolled ? "1px solid rgba(255,255,255,0.06)" : "none",
+          background: scrolled || menuOpen ? "rgba(3,7,18,0.95)" : "transparent",
+          backdropFilter: scrolled || menuOpen ? "blur(12px)" : "none",
+          borderBottom: scrolled || menuOpen ? "1px solid rgba(255,255,255,0.06)" : "none",
         }}
       >
         <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -85,7 +94,52 @@ export default function Home() {
             ))}
             <a
               href="mailto:rohitrajeev02@gmail.com"
-              className="text-sm px-4 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg transition-colors font-medium"
+              className="text-sm px-4 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg transition-colors font-medium hidden md:block"
+            >
+              Hire Me
+            </a>
+            {/* Hamburger */}
+            <button
+              className="md:hidden flex flex-col gap-1.5 p-1"
+              onClick={() => setMenuOpen((o) => !o)}
+              aria-label="Toggle menu"
+            >
+              <span
+                className="block w-5 h-px bg-white transition-all duration-300"
+                style={{ transform: menuOpen ? "translateY(6px) rotate(45deg)" : "none" }}
+              />
+              <span
+                className="block w-5 h-px bg-white transition-all duration-300"
+                style={{ opacity: menuOpen ? 0 : 1 }}
+              />
+              <span
+                className="block w-5 h-px bg-white transition-all duration-300"
+                style={{ transform: menuOpen ? "translateY(-6px) rotate(-45deg)" : "none" }}
+              />
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile menu */}
+        <div
+          className="md:hidden overflow-hidden transition-all duration-300"
+          style={{ maxHeight: menuOpen ? "300px" : "0" }}
+        >
+          <div className="px-6 pb-6 flex flex-col gap-4">
+            {NAV_LINKS.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-sm text-gray-400 hover:text-white transition-colors"
+                onClick={() => setMenuOpen(false)}
+              >
+                {link.label}
+              </a>
+            ))}
+            <a
+              href="mailto:rohitrajeev02@gmail.com"
+              className="text-sm px-4 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg transition-colors font-medium text-center"
+              onClick={() => setMenuOpen(false)}
             >
               Hire Me
             </a>
@@ -103,7 +157,7 @@ export default function Home() {
           }}
         />
         <p className="relative text-xs uppercase tracking-[0.25em] text-indigo-400 mb-6 font-medium">
-          Full Stack Developer · India
+          Web & App Developer · India
         </p>
         <h1
           className="relative text-5xl md:text-7xl font-bold mb-6 tracking-tight"
